@@ -3,8 +3,8 @@
 </script>
 
 <template>
-    <div class="">
-        <h1 class="font-bold text-3xl">Vue Todo</h1>
+    <div class="mb-4">
+        <h1 class="font-bold text-3xl">Your To Do</h1>
     </div>
 </template>
 
