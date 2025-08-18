@@ -18,9 +18,9 @@ const emit = defineEmits(['toggle', 'edit' ,'delete']);
             <h2 class="text-md text-gray-600 truncate" :class="{'line-through': props.todo.completed}">{{ props.todo.text }}</h2>
         </div>
 
-        <div class="col-span-3 md:col-span-3 flex justify-end items-center gap-3 pr-2 hover:opacity-30">
-            <img @click="emit('edit', props.todo.id)" src="/edit.svg" alt="Edit" class="cursor-pointer w-4 h-4" />
-            <img @click="emit('delete', props.todo.id)" src="/x-symbol.svg" alt="Edit" class="cursor-pointer w-3 h-3" />
+        <div class="col-span-3 md:col-span-3 flex justify-end items-center gap-3 pr-2">
+            <img @click="emit('edit', props.todo.id)" src="/edit.svg" alt="Edit" class="hover:opacity-30 cursor-pointer w-4 h-4" />
+            <img @click="emit('delete', props.todo.id)" src="/x-symbol.svg" alt="Delete" class="hover:opacity-30 cursor-pointer w-3 h-3" />
         </div>
 
     </div>
