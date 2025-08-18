@@ -3,6 +3,8 @@ import Header from './components/Header.vue'
 import Button from './components/Button.vue'
 import TodoCard from './components/TodoCard.vue'
 import Dialog from './components/Dialog.vue'
+
+import type {TTodo} from './models/todo.ts'
 import {ref, watch, onMounted} from 'vue'
 
 const todos = ref([])
@@ -19,19 +21,18 @@ onMounted(()=>{
 })
 
 watch(todos, async () => {
-  console.log(todos)
   localStorage.setItem('todos', JSON.stringify(todos.value))
 }, {deep: true})
 
 const toggleTodo = (id: number, val: Boolean) => {
   
-  const todo = todos.value.find(todo => todo.id === id)
+  const todo = todos.value.find((todo: TTodo) => todo.id === id)
   if (todo) {
     todo.completed = val
   }
 }
 const deleteTodo = (id: number) => {
-  todos.value = todos.value.filter(todo => todo.id !== id)
+  todos.value = todos.value.filter((todo: TTodo) => todo.id !== id)
 }
 
 const addTodo = () => {
@@ -44,11 +45,11 @@ const addTodo = () => {
 const editTodo = (id: number) => {
   toggleEdit.value = true
   editTodoId.value = id
-  editTodoText.value = todos.value.find((x)=>x.id === id).text ?? ''
+  editTodoText.value = todos.value.find((x: TTodo)=>x.id === id).text ?? ''
 }
 
 const confirmEditedTodo = () => {
-  const index = todos.value.findIndex((x)=>x.id===editTodoId.value)
+  const index = todos.value.findIndex((x: TTodo)=>x.id===editTodoId.value)
   todos.value[index].text = editTodoText
   toggleEdit.value = false
 }
@@ -57,7 +58,7 @@ const confirmEditedTodo = () => {
 <template>
   <div class="max-w-[460px] mx-auto mt-10 px-2 md:px-0">
     <Header />
-    <Dialog :title="'Edit'" :open="toggleEdit" @close="(e) => toggleEdit = false">
+    <Dialog :title="'Edit'" :open="toggleEdit" @close="() => toggleEdit = false">
       <div class="sticky top-0 pb-3 pt-2 bg-white mt-4 flex gap-2 justify-center items-center">
         <input v-model="editTodoText" @keyup.enter="confirmEditedTodo" type="text" class="border border-t-0 border-x-0 border-gray-300 border-1 px-3 py-2 w-full" placeholder="Edit Task..." />
         <Button @click="confirmEditedTodo">
@@ -75,16 +76,16 @@ const confirmEditedTodo = () => {
       <template v-for="todo in todos" :key="todo.id">
         <TodoCard 
           :todo="todo" 
-          @toggle="(id, val) => toggleTodo(id, val)" 
-          @delete="(id) => deleteTodo(id)" 
-          @edit="(id) => editTodo(id)" 
+          @toggle="(id: number, val: Boolean) => toggleTodo(id, val)" 
+          @delete="(id: number) => deleteTodo(id)" 
+          @edit="(id: number) => editTodo(id)" 
         />
       </template>
     </div>
     <div v-else class="flex justify-center items-center min-h-[100px]">
       <p>You don't have any tasks yet.</p>
     </div>
-    <p v-if="todos.length > 0" class="my-4">Your remaining todos: {{ todos.filter(todo => !todo.completed).length }}</p>
+    <p v-if="todos.length > 0" class="my-4">Your remaining todos: {{ todos.filter((todo: TTodo) => !todo.completed).length }}</p>
   </div>
 </template>
 

@@ -1,0 +1,1 @@
+{"root":["./src/main.ts","./src/vite-env.d.ts","./src/models/todo.ts","./src/app.vue","./src/components/button.vue","./src/components/dialog.vue","./src/components/header.vue","./src/components/todocard.vue"],"errors":true,"version":"5.8.3"}
